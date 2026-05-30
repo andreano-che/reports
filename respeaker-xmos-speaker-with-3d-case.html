@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Сборка колонки ReSpeaker XMOS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0b0d11; --surface: #13161c; --surface-raised: #1a1e28;
+    --border: #262d3d; --text: #e8edf5; --text-muted: #8892a8;
+    --accent: #7c5cfc; --accent-dim: #5a3fd4; --accent-glow: rgba(124,92,252,.15);
+    --green: #34d399; --amber: #fbbf24; --blue: #60a5fa;
+    --font: 'Inter', sans-serif; --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; line-height:1.6; }
+  .container { max-width: 920px; margin:0 auto; padding:0 20px; }
+  
+  .hero { padding:60px 0 40px; text-align:center; }
+  .hero h1 { font-size:clamp(28px,4vw,44px); font-weight:800; letter-spacing:-1px; margin-bottom:12px; }
+  .hero h1 span { background:linear-gradient(135deg,var(--accent),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p { color:var(--text-muted); font-size:16px; max-width:600px; margin:0 auto; }
+
+  .section-title { font-size:24px; font-weight:700; margin:48px 0 6px; display:flex; align-items:center; gap:10px; }
+  .section-title .num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; background:var(--accent); color:#fff; font-size:14px; font-weight:700; }
+  .section-desc { color:var(--text-muted); font-size:14px; margin-bottom:24px; }
+
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:24px; }
+  .card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
+  .card-header h2 { font-size:20px; font-weight:700; }
+  .price { display:inline-flex; align-items:center; gap:4px; padding:5px 12px; background:var(--accent-glow); border:1px solid rgba(124,92,252,.25); border-radius:8px; font-size:17px; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .price small { font-size:12px; font-weight:400; color:var(--text-muted); }
+
+  .links { margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .links .t { font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:6px; }
+  .links-wrap { display:flex; gap:6px; flex-wrap:wrap; }
+  .links-wrap a { display:inline-flex; align-items:center; gap:4px; padding:6px 12px; border-radius:6px; background:var(--surface-raised); border:1px solid var(--border); color:var(--text); text-decoration:none; font-size:12px; font-weight:500; transition:all .15s; }
+  .links-wrap a:hover { background:var(--accent-glow); border-color:var(--accent-dim); color:var(--accent); }
+  .links-wrap a .p { color:var(--text-dim); font-weight:400; }
+
+  .list-section ul { list-style:none; padding:0; margin-bottom:20px; }
+  .list-section li { font-size:15px; color:var(--text); padding:8px 0; border-bottom:1px dashed var(--border); display:flex; flex-direction:column; gap:4px; }
+  .list-section li:last-child { border-bottom:none; }
+  .list-section li .item-name { font-weight:600; color:var(--accent); font-size:16px; }
+  .list-section li .item-details { color:var(--text-muted); font-size:13px; margin-left:12px; }
+  .list-section li .item-price { color:var(--green); font-weight:500; }
+  .list-section li .item-link { color:var(--blue); text-decoration:none; font-size:13px; margin-left:12px; display:inline-block; margin-top:4px; }
+  .list-section li .item-link:hover { text-decoration:underline; }
+
+  .table-wrap { overflow-x:auto; margin:20px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { text-align:left; padding:12px 14px; background:var(--surface-raised); border-bottom:2px solid var(--accent-dim); font-weight:600; white-space:nowrap; }
+  tbody td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text-muted); }
+  tbody tr:hover td { background:var(--accent-glow); }
+  tbody td:first-child { font-weight:500; color:var(--text); white-space:nowrap; }
+  .chk { color:var(--green); font-weight:700; }
+
+  .step { background:var(--surface-raised); border-left:4px solid var(--accent); padding:20px 24px; margin-bottom:20px; border-radius:var(--radius); }
+  .step-num { font-size:18px; font-weight:700; color:var(--accent); margin-bottom:8px; }
+  .step h3 { font-size:18px; font-weight:600; margin-bottom:8px; }
+  .step p { font-size:14px; color:var(--text-muted); margin-bottom:12px; }
+  .step strong { color:var(--text); }
+  .step code { background:rgba(124,92,252,.08); color:var(--accent); padding:2px 6px; border-radius:4px; font-family:monospace; font-size:13px; }
+  .step pre { background:var(--bg); padding:12px; border-radius:8px; overflow-x:auto; font-family:monospace; font-size:13px; color:var(--green); border:1px solid var(--border); margin-top:12px; }
+  .step .highlight { color:var(--amber); }
+
+  .warning { background:rgba(251,191,36,.1); border-left:4px solid var(--amber); padding:16px; border-radius:var(--radius); margin-top:20px; }
+  .warning strong { color:var(--amber); }
+  .warning p { font-size:14px; color:var(--text-muted); line-height:1.5; }
+
+  .footer { text-align:center; padding:40px 0; color:var(--text-muted); font-size:12px; border-top:1px solid var(--border); margin-top:48px; }
+  .glow-line { height:1px; background:linear-gradient(90deg,transparent,var(--accent-dim),var(--accent),var(--accent-dim),transparent); margin:0; opacity:.5; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="container">
+    <h1>Сборка умной колонки<br>на <span>ReSpeaker XMOS</span></h1>
+    <p>Полная инструкция со всеми комплектующими, прошивкой и настройкой. Отличные микрофоны, хороший звук, любой LLM через Home Assistant.</p>
+  </div>
+</div>
+<div class="glow-line"></div>
+
+<div class="container">
+
+  <div class="section-title"><span class="num">1</span> Bill of Materials (BOM)</div>
+  <div class="section-desc">Что нужно купить, включая ссылки и цены.</div>
+
+  <div class="list-section card">
+    <div class="card-header"><h2>Общая примерная стоимость: <span class="price">€90 - €120</span></h2></div>
+    <ul>
+      <li>
+        <span class="item-name">ReSpeaker XMOS XVF3800 4-Mic Array + XIAO ESP32S3 Kit (БЕЗ акрилового корпуса)</span>
+        <span class="item-details">Главный комплект. Включает: 4 микрофона, XMOS DSP, ESP32-S3 (мозги), USB-C кабель.</span>
+        <span class="item-price">$60.99 (~€57)</span>
+        <a class="item-link" href="https://www.seeedstudio.com/ReSpeaker-XVF3800-4-Mic-Array-With-XIAO-ESP32S3-p-6489.html" target="_blank">Купить на Seeed Studio</a>
+      </li>
+      <li>
+        <span class="item-name">3D-печать корпуса (по модели Honza)</span>
+        <span class="item-details">Корпус с местом для 40мм динамика и кнопкой mute. STL-файлы бесплатны.</span>
+        <span class="item-price">€20-40</span>
+        <a class="item-link" href="https://www.printables.com/model/1467255-seeedstudio-respeaker-xvf3800-case" target="_blank">Модель на Printables.com</a>
+      </li>
+      <li>
+        <span class="item-name">PAM8403 Mini Digital Amplifier Module (2x3W Stereo)</span>
+        <span class="item-details">Недорогой, компактный. Для 1-го динамика (используем 1 канал). Подключается к аналоговым выходам ReSpeaker.</span>
+        <span class="item-price">$3-5 (~€3-5)</span>
+        <a class="item-link" href="https://aliexpress.ru/wholesale?SearchText=PAM8403+amplifier" target="_blank">Купить на AliExpress</a>
+      </li>
+      <li>
+        <span class="item-name">Динамик 40MM Mini Audio Portable Speaker (1 шт.)</span>
+        <span class="item-details">Именно такой использовал автор корпуса.</span>
+        <span class="item-price">$3-7 (~€3-7)</span>
+        <a class="item-link" href="https://aliexpress.ru/wholesale?SearchText=40MM+mini+audio+speaker+4+ohm" target="_blank">Найти на AliExpress</a>
+      </li>
+      <li>
+        <span class="item-name">USB-C блок питания 5V, 3A</span>
+        <span class="item-details">Для стабильной работы всей системы. Убедись, что выдает 3А.</span>
+        <span class="item-price">€10-15</span>
+        <a class="item-link" href="https://www.amazon.de/s?k=usb+c+power+supply+5v+3a" target="_blank">Найти на Amazon DE</a>
+      </li>
+      <li>
+        <span class="item-name">Провода Dupont (male-female)</span>
+        <span class="item-details">Для удобного соединения платы ReSpeaker с усилителем, если не хочешь паять все напрямую.</span>
+        <span class="item-price">$3-5 (~€3-5)</span>
+        <a class="item-link" href="https://aliexpress.ru/wholesale?SearchText=dupont+wires+male+female" target="_blank">Купить на AliExpress</a>
+      </li>
+      <li>
+        <span class="item-name">Винты M2x20 (3 шт.) + Резиновые ножки 3мм (3 шт.)</span>
+        <span class="item-details">Для крепления платы и корпуса, согласно дизайну Honza.</span>
+        <span class="item-price">$2-5 (~€2-5)</span>
+        <a class="item-link" href="https://aliexpress.ru/wholesale?SearchText=m2x20+screws+rubber+feet" target="_blank">Найти на AliExpress</a>
+      </li>
+      <li>
+        <span class="item-name">Припой и паяльник</span>
+        <span class="item-details">Понадобится для подключения динамика к усилителю и усилителя к ReSpeaker (если не используешь Dupont).</span>
+        <span class="item-price">€10-20</span>
+        <span class="item-link">Купить в любом магазине электроники</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-title"><span class="num">2</span> Инструкция по сборке железа</div>
+  <div class="section-desc">Пошаговое руководство по физической сборке компонентов.</div>
+
+  <div class="step">
+    <div class="step-num">Шаг 1</div>
+    <h3>Распакуй и осмотри ReSpeaker Kit и 3D-печатный корпус</h3>
+    <p>Достань из коробки **XMOS XVF3800 плату**, **XIAO ESP32S3** и USB-C кабель. **XIAO ESP32S3 пока не вставляй в разъём на XMOS плате.** Получи свой 3D-печатный корпус.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 2</div>
+    <h3>Подготовь 3D-печатный корпус</h3>
+    <p>Согласно инструкциям автора модели Honza, тебе понадобится **тонкая поддерживающая перемычка (thin support enforcer)** в середине отверстия для кнопки mute (см. часть Case Top). Затем аккуратно **приклей кнопку mute**.</p>
+    <p>Для создания собственного дизайна корпуса, можешь использовать 3D-модель ReSpeaker XVF3800: <a href="https://grabcad.com/library/seeedstudio-respeaker-xvf3800-board-1" target="_blank">GrabCAD</a>.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 3</div>
+    <h3>Установи XMOS XVF3800 плату в корпус</h3>
+    <p>XMOS плата должна удобно расположиться внутри корпуса. Используй **3 винта M2x20** для её крепления (согласно дизайну Honza). Аккуратно проложи все провода через предусмотренные отверстия.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 4</div>
+    <h3>Подключи усилитель PAM8403 к ReSpeaker XVF3800</h3>
+    <p>XMOS XVF3800 имеет встроенный ЦАП (DAC) и выдает <strong>аналоговый аудиосигнал</strong>. Найди на плате XVF3800 пины аналогового аудиовыхода (например, **OUT_L, OUT_R, GND**).</p>
+    <p>Подключи (для одного динамика используем один канал, например, левый):</p>
+    <ul>
+      <li><strong>OUT_L</strong> (XMOS) → **L** (PAM8403)</li>
+      <li><strong>GND</strong> (XMOS) → **GND** (PAM8403)</li>
+      <li>(Пин OUT_R можно оставить неподключенным)</li>
+    </ul>
+    <p>Используй провода Dupont для аккуратного соединения. Если нет Dupont, придется паять. Также подключи **питание PAM8403**:</p>
+    <ul>
+      <li><strong>5V</strong> (XMOS или XIAO ESP32S3) → **VCC** (PAM8403)</li>
+      <li><strong>GND</strong> (XMOS или XIAO ESP32S3) → **GND** (PAM8403)</li>
+    </ul>
+    <div class="warning"><p><strong>Внимание:</strong> Убедись, что XIAO ESP32S3 (или XMOS плата) может выдать достаточный ток для усилителя (до 1.2А при 5V). Общий USB-C блок питания на 5V/3A должен обеспечить достаточно мощности для всей системы.</p></div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 5</div>
+    <h3>Подключи динамик к усилителю PAM8403</h3>
+    <p>На усилителе PAM8403 есть 4 клеммы: **L+, L-, R+, R-**.</p>
+    <p>Подключи твой 40MM динамик к **L+** и **L-** (используем левый канал усилителя).</p>
+    <p>Постарайся соблюдать полярность для лучшего качества звука. Скорее всего, понадобится пайка.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 6</div>
+    <h3>Установи XIAO ESP32S3 на XMOS XVF3800</h3>
+    <p>Осторожно вставь XIAO ESP32S3 в соответствующий разъём на XMOS XVF3800. Убедись, что все пины совпали и плата сидит плотно.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 7</div>
+    <h3>Финальная сборка корпуса и ножки</h3>
+    <p>Аккуратно уложи все провода внутри корпуса. Закрой корпус, закрутив все винты. Приклей **3 резиновые ножки 3мм** на дно корпуса, как показано на фото в оригинальной 3D-модели.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 8</div>
+    <h3>Подключи USB-C блок питания</h3>
+    <p>Подключи блок питания 5V, 3A к USB-C порту на **XIAO ESP32S3**. Устройство должно включиться, RGB LED на ReSpeaker XVF3800 должны засветиться.</p>
+  </div>
+
+  <div class="section-title"><span class="num">3</span> Прошивка и настройка ПО</div>
+  <div class="section-desc">Настройка ESPHome и Home Assistant для интеграции LLM.</div>
+
+  <div class="step">
+    <div class="step-num">Шаг 1</div>
+    <h3>Подготовь Home Assistant</h3>
+    <p>Убедись, что у тебя установлен и работает Home Assistant. Установи дополнение **ESPHome** в Home Assistant (Supervisor -> Add-on Store -> ESPHome).</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 2</div>
+    <h3>Создай новый девайс в ESPHome</h3>
+    <p>Открой веб-интерфейс ESPHome. Нажми <code>+ NEW DEVICE</code>. Дай имя своему девайсу (например, <code>respeaker-xmos-speaker</code>). Выбери <code>ESP32-S3</code> как тип платы. Скачай сгенерированный <code>.yaml</code> файл конфигурации.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 3</div>
+    <h3>Настрой <code>.yaml</code> файл для ReSpeaker XVF3800</h3>
+    <p>Тебе нужно добавить специфичные настройки для XMOS XVF3800 и аудио в этот <code>.yaml</code> файл. Вот пример. **Важно: пины (GPIO) могут отличаться**, сверяйся с документацией ReSpeaker XVF3800 и XIAO ESP32S3.</p>
+    <pre><code>esphome:
+  name: respeaker-xmos-speaker
+  platform: ESP32S3
+  board: esp-wroom-32s3-devkitc-1 # Или другая плата ESP32S3, совместимая с XIAO ESP32S3
+
+wifi:
+  ssid: "ТВОЯ_WIFI_СЕТЬ"
+  password: "ТВОЙ_ПАРОЛЬ_ОТ_WIFI"
+  ap:
+    ssid: "Respeaker Fallback"
+    password: "password"
+
+logger:
+
+api:
+  encryption:
+    key: "ОЧЕНЬ_СЕКРЕТНЫЙ_КЛЮЧ_ДЛЯ_HA" # Сгенерируй случайную строку, 16 символов
+
+external_components:
+  - source: github://prickle-uk/esphome-xmos-respeaker@main
+    components: [ xmos_respeaker ]
+
+xmos_respeaker:
+  id: xmos_audio
+  # I2C пины для связи ESP32S3 с XMOS. Проверь документацию XIAO ESP32S3.
+  i2c_sd_pin: GPIO33 
+  i2c_scl_pin: GPIO34
+  # Дополнительные настройки XMOS (mute, led) см. в документации esphome-xmos-respeaker
+
+voice_assistant:
+  microphone:
+    source: xmos_respeaker # Используй компонент XMOS как источник микрофона
+    id: internal_mic
+  # speaker: - не настраиваем здесь, так как XMOS уже выводит аналоговый сигнал на усилитель
+
+# Опционально: Wake word (требует много RAM, но ESP32S3 с 8MB PSRAM потянет)
+wake_word:
+  - platform: openwakeword
+    model: "hey_nabu" # Пример wake word, можно поменять
+
+# Управление RGB LED кольцом на XMOS XVF3800 (если есть доступные GPIO и драйвер)
+# light:
+#   - platform: neopixelbus
+#     type: GRB
+#     pin: GPIO_RGB_LED_PIN # Замени на реальный GPIO пин
+#     num_leds: 4 # Количество светодиодов
+#     id: speaker_lights
+
+# media_player (если хочешь воспроизводить музыку из HA)
+media_player:
+  - platform: i2s_audio
+    id: media_out
+    # !!! Внимание: I2S выходы XMOS XVF3800 уже подают сигнал на PAM8403.
+    # Этот media_player здесь будет не нужен, если ты уже используешь аналоговые выходы XVF3800.
+    # Если же XMOS_respeaker компонент в ESPHome может напрямую управлять XMOS для воспроизведения, 
+    # то возможно понадобится его использовать. Для начала оставь закомментированным.
+
+</code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 4</div>
+    <h3>Прошей ESP32S3</h3>
+    <p>Подключи **XIAO ESP32S3** к компьютеру через USB-C. В веб-интерфейсе ESPHome нажми <code>UPLOAD</code> для своего девайса. Выбери **Web Flasher** для прошивки через браузер.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">Шаг 5</div>
+    <h3>Настрой Home Assistant Assist для LLM (Perplexity)</h3>
+    <p>После успешной прошивки, твой девайс появится в Home Assistant. Перейди в **Home Assistant: <code>Settings -> Voice</code>**.</p>
+    <p>В разделе **<code>Assist pipeline</code>** создай новый или отредактируй существующий:</p>
+    <ul>
+      <li><strong>Speech-to-Text (STT):</strong> Выбери <code>Home Assistant</code>. Твой ESPHome девайс будет передавать распознанный текст сюда.</li>
+      <li><strong>Language Model (LLM):</strong>
+        <ul>
+          <li>Добавь нового <code>Conversational Agent</code>.</li>
+          <li>Выбери <code>OpenAI Conversation</code>.</li>
+          <li>В настройках <code>OpenAI Conversation</code> укажи:
+            <ul>
+              <li><code>API key:</code> **Твой Perplexity API ключ.**</li>
+              <li><code>Base URL:</code> <code>https://api.perplexity.ai/</code></li>
+              <li><code>Model:</code> <code>sonar-pro</code> (или <code>sonar-deep-research</code> для более глубоких ответов).</li>
+            </ul>
+          </li>
+          <li>Настрой другие параметры (температура, системный промпт).</li>
+        </ul>
+      </li>
+      <li><strong>Text-to-Speech (TTS):</strong> Выбери <code>Home Assistant</code>. Твой ESPHome девайс будет воспроизводить TTS, который ему передаст HA.</li>
+    </ul>
+    <p>В **<code>Audio output device</code>** в Home Assistant выбери твой девайс: <code>respeaker-xmos-speaker</code>.</p>
+  </div>
+
+  <div class="section-title"><span class="num">4</span> Что ожидать</div>
+
+  <div class="card">
+    <ul>
+      <li><strong>Качество микрофонов:</strong> Благодаря XMOS DSP, распознавание речи будет отличным, даже в шумных условиях.</li>
+      <li><strong>Качество звука:</strong> Зависит от выбранных динамиков и усилителя. PAM8403 + хороший 40MM динамик дадут приемлемое качество для голосовых ответов и фоновой музыки.</li>
+      <li><strong>Дизайн:</strong> Для "премиум" дизайна ищи 3D-модели (поиск <code>respeaker xvf3800 case</code> на Printables.com) и заказывай печать.</li>
+      <li><strong>Время сборки:</strong> Железо 1-2 часа. Прошивка и настройка ПО 1-3 часа.</li>
+      <li><strong>Доставка:</strong> Seeed Studio и AliExpress обычно доставляют на Кипр за 10-20 дней. Amazon DE быстрее (3-5 дней).</li>
+    </ul>
+  </div>
+
+  <div class="warning"><p><strong>Важно:</strong> Этот проект требует базовых знаний электроники (подключение проводов) и работы с Home Assistant/ESPHome. При возникновении проблем, ищи помощь в сообществах Home Assistant и Seeed Studio.</p></div>
+
+</div>
+<div class="glow-line"></div>
+<div class="footer">30 мая 2026 • Andrei Vashchenko • Fintech PM, Cyprus</div>
+</body>
+</html>
