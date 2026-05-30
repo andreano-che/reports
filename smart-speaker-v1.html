@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Smart Speaker — исследование</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  
+  :root {
+    --bg: #0b0d11;
+    --surface: #13161c;
+    --surface-raised: #1a1e28;
+    --surface-hover: #222838;
+    --border: #262d3d;
+    --text: #e8edf5;
+    --text-muted: #8892a8;
+    --text-dim: #5b657a;
+    --accent: #7c5cfc;
+    --accent-dim: #5a3fd4;
+    --accent-glow: rgba(124,92,252,.15);
+    --green: #34d399;
+    --green-dim: #065f46;
+    --amber: #fbbf24;
+    --amber-dim: #783f04;
+    --blue: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --rose: #f472b6;
+    --tag-bg: rgba(124,92,252,.12);
+    --tag-text: #a78bfa;
+    --card-radius: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .3px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 span { background: linear-gradient(135deg,var(--accent),var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto 8px;
+    position: relative;
+  }
+  .hero .sub-meta {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 12px;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+    margin: 60px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  /* Option card */
+  .option-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin-bottom: 28px;
+    transition: border-color .2s;
+  }
+  .option-card:hover { border-color: var(--accent-dim); }
+  .option-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .option-card .card-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.2px;
+  }
+  .option-card .card-header h2 small {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+  .price-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(124,92,252,.25);
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .price-tag .orig { font-size: 13px; font-weight: 400; color: var(--text-dim); text-decoration: line-through; }
+  .price-tag small { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .tag.green { background: var(--green-dim); color: var(--green); }
+  .tag.blue { background: var(--blue-dim); color: var(--blue); }
+  .tag.amber { background: var(--amber-dim); color: var(--amber); }
+  .tag.accent { background: var(--tag-bg); color: var(--tag-text); }
+
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--surface-raised);
+    border-radius: 10px;
+  }
+  .specs .spec { display: flex; flex-direction: column; gap: 2px; }
+  .specs .spec .label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .5px; }
+  .specs .spec .value { font-size: 14px; font-weight: 500; color: var(--text); }
+
+  .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width:600px) { .pros-cons { grid-template-columns: 1fr; } }
+  .pros, .cons { padding: 14px 16px; border-radius: 10px; }
+  .pros { background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.15); }
+  .cons { background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.15); }
+  .pros .pc-title, .cons .pc-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .pros .pc-title { color: var(--green); }
+  .cons .pc-title { color: var(--amber); }
+  .pros ul, .cons ul { list-style: none; padding: 0; }
+  .pros li, .cons li { font-size: 14px; color: var(--text-muted); padding: 2px 0; position: relative; padding-left: 16px; }
+  .pros li::before { content: '+'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .cons li::before { content: '−'; position: absolute; left: 0; color: var(--amber); font-weight: 700; }
+
+  .buy-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .buy-section .buy-title { font-size: 13px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+  .buy-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .buy-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all .15s;
+  }
+  .buy-link:hover { background: var(--surface-hover); border-color: var(--accent-dim); color: var(--accent); }
+  .buy-link .link-price { color: var(--text-dim); font-weight: 400; }
+
+  /* Architecture diagram */
+  .arch {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin: 28px 0;
+  }
+  .arch h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px;
+    background: var(--surface-raised);
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .arch-flow .node {
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    text-align: center;
+    min-width: 80px;
+  }
+  .arch-flow .node.cloud { border-color: var(--accent-dim); background: var(--accent-glow); color: var(--accent); }
+  .arch-flow .arrow { color: var(--text-dim); font-size: 18px; }
+
+  /* Comparison table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    padding: 14px 16px;
+    background: var(--surface-raised);
+    border-bottom: 2px solid var(--accent-dim);
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  tbody tr:hover td { background: var(--surface-hover); }
+  tbody td:first-child { font-weight: 500; color: var(--text); }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--amber); }
+  .star { color: var(--amber); }
+
+  /* Recommendation */
+  .recommendation {
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    border: 1px solid rgba(124,92,252,.3);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin: 40px 0;
+  }
+  .recommendation h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .recommendation .rec-sub { color: var(--text-muted); font-size: 15px; margin-bottom: 16px; }
+  .recommendation .rec-text { font-size: 15px; color: var(--text); line-height: 1.7; }
+  .recommendation .rec-text strong { color: var(--accent); }
+
+  /* FAQ */
+  .faq-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .faq-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .faq-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 48px 0;
+    color: var(--text-dim);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+  }
+
+  /* Scroll indicator */
+  .toc {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .toc a {
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all .15s;
+  }
+  .toc a:hover { background: var(--surface-hover); color: var(--accent); border-color: var(--accent-dim); }
+
+  /* Device photos placeholder */
+  .device-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .device-card {
+    background: var(--surface-raised);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .device-card .emoji-big { font-size: 48px; margin-bottom: 8px; }
+  .device-card h4 { font-size: 14px; font-weight: 600; }
+  .device-card p { font-size: 12px; color: var(--text-dim); }
+
+  @media (max-width:600px) {
+    .hero { padding: 40px 0 28px; }
+    .option-card { padding: 20px; }
+    .option-card .card-header h2 { font-size: 18px; }
+    .price-tag { font-size: 15px; }
+  }
+
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-dim), var(--accent), var(--accent-dim), transparent);
+    margin: 0;
+    opacity: .5;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-label">⚡ Fintech PM × DIY Tech</div>
+    <h1>Умная колонка<br>на <span>любом LLM API</span></h1>
+    <p>Без вендор-лока. Perplexity, DeepSeek, Groq, OpenAI — любые. Управление умным домом через MCP, IR, MQTT, Home Assistant.</p>
+    <div class="sub-meta">30 мая 2026 • Cloud-first архитектура • Ничего не надо паять</div>
+  </div>
+</div>
+
+<div class="glow-line"></div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc" style="margin-top:40px">
+    <a href="#a">ESP32-S3-BOX-3</a>
+    <a href="#b">AtomS3R AI Chatbot Kit</a>
+    <a href="#c">AtomS3R + Echo Pyramid</a>
+    <a href="#arch">Архитектура</a>
+    <a href="#compare">Сравнение</a>
+    <a href="#pick">Что выбрать</a>
+    <a href="#faq">FAQ</a>
+  </div>
+
+  <!-- Architecture -->
+  <div class="arch" id="arch">
+    <h3>🔮 Cloud-first архитектура</h3>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px">Privacy неважна → всё через облачные API. Максимальное качество STT, LLM, TTS. Ничего локально, кроме wake word.</p>
+    <div class="arch-flow">
+      <span class="node">🎤 Микрофон<br><span style="font-weight:400;font-size:11px;color:var(--text-dim)">ESP32-S3</span></span>
+      <span class="arrow">→</span>
+      <span class="node cloud">🌐 Xiaozhi Server<br><span style="font-weight:400;font-size:11px">VPS / RPi</span></span>
+      <span class="arrow">→</span>
+      <span class="node cloud">🎯 STT<br><span style="font-weight:400;font-size:11px">Groq / Whisper</span></span>
+      <span class="arrow">→</span>
+      <span class="node cloud">🧠 LLM API<br><span style="font-weight:400;font-size:11px;color:var(--accent)">Perplexity / DeepSeek</span></span>
+      <span class="arrow">→</span>
+      <span class="node cloud">🔊 TTS<br><span style="font-weight:400;font-size:11px">ElevenLabs / Edge</span></span>
+      <span class="arrow">→</span>
+      <span class="node">🔉 Динамик<br><span style="font-weight:400;font-size:11px;color:var(--text-dim)">ESP32-S3</span></span>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+      <span class="tag green">STT через Groq — быстрейшее распознавание</span>
+      <span class="tag blue">Perplexity API — актуальные ответы с источниками</span>
+      <span class="tag amber">ElevenLabs TTS — лучший голос</span>
+      <span class="tag accent">Xiaozhi Server — любой OpenAI-совместимый LLM</span>
+    </div>
+  </div>
+
+  <!-- Option A -->
+  <div id="a">
+    <div class="section-title"><span class="num">A</span> ESP32-S3-BOX-3</div>
+    <div class="section-desc">Самый полный девайс от Espressif — корпус, большой сенсорный экран, 2 микрофона, динамик</div>
+
+    <div class="option-card">
+      <div class="card-header">
+        <h2>ESP32-S3-BOX-3 <small>— официальный продукт Espressif</small></h2>
+        <div class="price-tag"><small>от</small> $61 <small>≈ €58</small></div>
+      </div>
+      <div class="tags">
+        <span class="tag green">2 микрофона</span>
+        <span class="tag blue">2.8" сенсорный дисплей</span>
+        <span class="tag amber">Готовый корпус</span>
+        <span class="tag accent">Xiaozhi из коробки</span>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span class="label">Процессор</span><span class="value">ESP32-S3, 8MB PSRAM</span></div>
+        <div class="spec"><span class="label">Экран</span><span class="value">2.8" 320×240 сенсорный</span></div>
+        <div class="spec"><span class="label">Микрофоны</span><span class="value">2 × цифровых с шумоподавлением</span></div>
+        <div class="spec"><span class="label">Динамик</span><span class="value">Встроенный + аудиокодек ES8311</span></div>
+        <div class="spec"><span class="label">Слот</span><span class="value">microSD, USB-C</span></div>
+        <div class="spec"><span class="label">Пайка</span><span class="value">Не нужна 🎉</span></div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <div class="pc-title">+ Плюсы</div>
+          <ul>
+            <li>Полный комплект: корпус, экран, микрофоны, динамик</li>
+            <li>Сенсорный экран для UI/статуса</li>
+            <li>2 микрофона с аппаратным шумоподавлением</li>
+            <li>Официальный Espressif — документация и поддержка</li>
+            <li>Совместимость с 70+ прошивками</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <div class="pc-title">− Минусы</div>
+          <ul>
+            <li>Дизайн индустриальный (чёрный пластик)</li>
+            <li>Динамик средний, не для музыки</li>
+            <li>Дороже других ESP32-вариантов</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buy-section">
+        <div class="buy-title">🎯 Где купить</div>
+        <div class="buy-links">
+          <a class="buy-link" href="https://www.aliexpress.com/item/1005006169541505.html" target="_blank">AliExpress <span class="link-price">~$61-75</span></a>
+          <a class="buy-link" href="https://www.adafruit.com/product/5835" target="_blank">Adafruit <span class="link-price">$79.95</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div id="b">
+    <div class="section-title"><span class="num">B</span> AtomS3R AI Chatbot Kit</div>
+    <div class="section-desc">⭐ Рекомендую. Компактный, стильный, алюминиевый корпус. Вставить в базу — готово.</div>
+
+    <div class="option-card" style="border-color:rgba(124,92,252,.4)">
+      <div class="card-header">
+        <h2>AtomS3R + Atomic Voice Base <small>— M5Stack</small></h2>
+        <div class="price-tag"><small>всего</small> $21.50 <small>≈ €20</small></div>
+      </div>
+      <div class="tags">
+        <span class="tag green">1.28" цветной дисплей</span>
+        <span class="tag blue">MEMS микрофон</span>
+        <span class="tag green">IR-пульт</span>
+        <span class="tag amber">Алюминиевый корпус</span>
+        <span class="tag accent">Xiaozhi из коробки</span>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span class="label">Процессор</span><span class="value">ESP32-S3-PICO, 8+8MB</span></div>
+        <div class="spec"><span class="label">Экран</span><span class="value">1.28" IPS 128×128</span></div>
+        <div class="spec"><span class="label">Звук</span><span class="value">ES8311 кодек + 1W динамик</span></div>
+        <div class="spec"><span class="label">Датчики</span><span class="value">9-осевой IMU</span></div>
+        <div class="spec"><span class="label">IR</span><span class="value">До 12 метров</span></div>
+        <div class="spec"><span class="label">Пайка</span><span class="value">Не нужна 🎉</span></div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <div class="pc-title">+ Плюсы</div>
+          <ul>
+            <li>Красивый алюминиевый корпус — выглядит как премиум-гаджет</li>
+            <li>IR-передатчик для управления ТВ, кондиционером, техникой</li>
+            <li>Цветной дисплей для статуса, эмоций, погоды</li>
+            <li>Ничего паять: вставил в базу — готово</li>
+            <li>$21.50 — лучшая цена за завершённый девайс</li>
+            <li>Предустановленная поддержка Xiaozhi</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <div class="pc-title">− Минусы</div>
+          <ul>
+            <li>1W динамик — не для громкой музыки (для комнаты норм)</li>
+            <li>1 микрофон (MEMS качественный, но один)</li>
+            <li>Маленький экран 1.28"</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buy-section">
+        <div class="buy-title">🎯 Где купить</div>
+        <div class="buy-links">
+          <a class="buy-link" href="https://shop.m5stack.com/products/atoms3r-ai-chatbot-kit-8mb-psram" target="_blank">M5Stack Store <span class="link-price">$21.50</span></a>
+          <a class="buy-link" href="https://www.aliexpress.com/item/1005009811297658.html" target="_blank">AliExpress <span class="link-price">~$18-25</span></a>
+        </div>
+        <div style="margin-top:8px;font-size:13px;color:var(--text-dim)">
+          💡 Или бюджетнее: <a href="https://shop.m5stack.com/products/atom-echos3r-smart-speaker-dev-kit" target="_blank" style="color:var(--accent)">Atom VoiceS3R</a> за $14.50 — всё в одном корпусе, но без отдельного дисплея
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div id="c">
+    <div class="section-title"><span class="num">C</span> AtomS3R + Echo Pyramid</div>
+    <div class="section-desc">Лучший звук. Пирамидальная база с качественным динамиком — выглядит как настоящая колонка.</div>
+
+    <div class="option-card">
+      <div class="card-header">
+        <h2>AtomS3R + Echo Pyramid Base <small>— M5Stack</small></h2>
+        <div class="price-tag"><small>от</small> $38 <small>≈ €36</small></div>
+      </div>
+      <div class="tags">
+        <span class="tag green">Лучший звук</span>
+        <span class="tag blue">Стильный дизайн</span>
+        <span class="tag green">IR-пульт</span>
+        <span class="tag amber">AtomS3R сверху</span>
+      </div>
+
+      <div class="specs">
+        <div class="spec"><span class="label">Процессор</span><span class="value">ESP32-S3-PICO (в AtomS3R)</span></div>
+        <div class="spec"><span class="label">Экран</span><span class="value">1.28" IPS на AtomS3R</span></div>
+        <div class="spec"><span class="label">Аудио</span><span class="value">ES8311 + улучшенный динамик Pyramid</span></div>
+        <div class="spec"><span class="label">Форм-фактор</span><span class="value">Пирамида 74×74×68мм</span></div>
+        <div class="spec"><span class="label">Пайка</span><span class="value">Не нужна. Просто поставить сверху</span></div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <div class="pc-title">+ Плюсы</div>
+          <ul>
+            <li>Лучшее качество звука среди всех ESP32-вариантов</li>
+            <li>Дизайн как у настоящей смарт-колонки — не стыдно поставить</li>
+            <li>AtomS3R с дисплеем и IR сверху</li>
+            <li>Модульность: можно заменить верхнюю часть</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <div class="pc-title">− Минусы</div>
+          <ul>
+            <li>Нужно покупать AtomS3R + базу отдельно</li>
+            <li>Дороже варианта B (~$38 против $21.50)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buy-section">
+        <div class="buy-title">🎯 Где купить</div>
+        <div class="buy-links">
+          <a class="buy-link" href="https://shop.m5stack.com/products/echo-pyramid-smart-speaker-base-without-m5atom" target="_blank">Pyramid Base (M5Stack) <span class="link-price">$24.50</span></a>
+          <a class="buy-link" href="https://shop.m5stack.com/products/atoms3r-ai-chatbot-kit-8mb-psram" target="_blank">AtomS3R Kit <span class="link-price">$21.50</span></a>
+          <a class="buy-link" href="https://www.aliexpress.com/item/1005011806856904.html" target="_blank">Pyramid Base (AliExpress) <span class="link-price">~$36</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div id="compare">
+    <div class="section-title">📊 Сравнение</div>
+    <div class="section-desc">Все три варианта — готовые девайсы в корпусе, пайка не нужна, Xiaozhi из коробки</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Параметр</th><th>ESP32-S3-BOX-3</th><th>AtomS3R Chatbot Kit</th><th>AtomS3R + Pyramid</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Цена (€)</td><td>€58-70</td><td><strong style="color:var(--green)">€20</strong></td><td>€36-50</td></tr>
+          <tr><td>Корпус</td><td><span class="check">✓</span> Пластик</td><td><span class="check">✓</span> Алюминий</td><td><span class="check">✓</span> Pyramid</td></tr>
+          <tr><td>Экран</td><td>2.8" сенсорный</td><td>1.28" IPS</td><td>1.28" IPS</td></tr>
+          <tr><td>Микрофоны</td><td>2</td><td>1 (MEMS)</td><td>1 (MEMS)</td></tr>
+          <tr><td>Динамик</td><td>Встроенный</td><td>1W</td><td><strong style="color:var(--green)">Улучшенный</strong></td></tr>
+          <tr><td>IR-пульт</td><td><span class="cross">✗</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Любой LLM API</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Xiaozhi из коробки</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+          <tr><td>Пайка</td><td>Не нужна</td><td>Не нужна</td><td>Не нужна</td></tr>
+          <tr><td>Дизайн</td><td><span class="star">★★★</span></td><td><span class="star">★★★★★</span></td><td><span class="star">★★★★★</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="recommendation" id="pick">
+    <h2>🎯 Что выбрать</h2>
+    <div class="rec-sub">Твой сценарий: Perplexity API, умный дом, эффективность, дизайн</div>
+    <div class="rec-text">
+      <p style="margin-bottom:12px"><strong>Я рекомендую AtomS3R AI Chatbot Kit за $21.50.</strong></p>
+      <p>Это готовый девайс в красивом алюминиевом корпусе. Собирается за 5 секунд (вставить в базу). Xiaozhi прошивка из коробки — поднимаешь свой сервер, указываешь Perplexity API, и колонка отвечает через Groq (STT) → Perplexity (LLM) → ElevenLabs (TTS). Цена смешная для такого функционала.</p>
+      <p style="margin-top:12px">Если нужен <strong>экран побольше</strong> — ESP32-S3-BOX-3 за $61.</p>
+      <p>Если нужен <strong>лучший звук</strong> — AtomS3R + Echo Pyramid Base за ~$50.</p>
+      <p style="margin-top:12px">Но по соотношению цена/функции/дизайн — AtomS3R Kit вне конкуренции.</p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq">
+    <div class="section-title">❓ Вопросы и ответы</div>
+
+    <div class="faq-item">
+      <h4>Что такое Perplexity API и как его подключить?</h4>
+      <p>Perplexity предоставляет OpenAI-совместимый API. В конфиге Xiaozhi сервера указываешь <code>provider: openai_compatible, base_url: https://api.perplexity.ai, model: sonar-pro</code> — и готово.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Нужен ли Home Assistant?</h4>
+      <p>Нет. Xiaozhi не требует HA. Управление домом через MCP, MQTT, GPIO, IR. Если HA есть — интегрируется через MCP-мост или ESPHome.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Какие провайдеры поддерживаются?</h4>
+      <p>Любые OpenAI-совместимые: Perplexity, DeepSeek, Groq, Together, Fireworks, OpenRouter. Также Qwen напрямую. Gemini через прокси. TTS: ElevenLabs, Edge-TTS, Groq, 火山引擎.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Сколько времени займёт сборка и настройка?</h4>
+      <p>Физически — 5 минут (вставить AtomS3R в базу, подключить USB). Прошивка через веб-инструмент — 10 минут. Настройка сервера — 30 минут. Итого: ~1 час с нуля до работающей колонки.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Что нужно для Xiaozhi сервера?</h4>
+      <p>Любой Linux-сервер (VPS за $5/мес или Raspberry Pi дома). Python-сервер: https://github.com/xinnan-tech/xiaozhi-esp32-server. Или используй бесплатный тестовый сервер xiaozhi.me.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Можно ли управлять музыкой?</h4>
+      <p>Динамики в этих устройствах — голосовые (1-3W). Для голосовых команд и ответов норм, для музыки — нет. Это голосовой ассистент, не музыкальная колонка.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="container">
+    Собрано 30 мая 2026 • Andrei Vashchenko • Fintech PM, Cyprus<br>
+    Xiaozhi: github.com/78/xiaozhi-esp32 • M5Stack: shop.m5stack.com
+  </div>
+</div>
+
+</body>
+</html>

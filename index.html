@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Умная колонка — варианты с дизайном</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --bg: #0b0d11; --surface: #13161c; --surface-raised: #1a1e28;
+    --border: #262d3d; --text: #e8edf5; --text-muted: #8892a8;
+    --accent: #7c5cfc; --accent-dim: #5a3fd4; --accent-glow: rgba(124,92,252,.15);
+    --green: #34d399; --amber: #fbbf24; --blue: #60a5fa;
+    --font: 'Inter', sans-serif; --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+  .container { max-width: 920px; margin:0 auto; padding:0 20px; }
+  
+  .hero { padding:60px 0 40px; text-align:center; }
+  .hero h1 { font-size:clamp(28px,4vw,44px); font-weight:800; letter-spacing:-1px; margin-bottom:12px; }
+  .hero h1 span { background:linear-gradient(135deg,var(--accent),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p { color:var(--text-muted); font-size:16px; max-width:600px; margin:0 auto; }
+
+  .section-title { font-size:24px; font-weight:700; margin:48px 0 6px; display:flex; align-items:center; gap:10px; }
+  .section-title .num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; background:var(--accent); color:#fff; font-size:14px; font-weight:700; }
+  .section-desc { color:var(--text-muted); font-size:14px; margin-bottom:24px; }
+
+  .card {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px;
+    margin-bottom:24px; transition:border-color .2s;
+  }
+  .card:hover { border-color:var(--accent-dim); }
+  .card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:12px; }
+  .card-header h2 { font-size:20px; font-weight:700; }
+  .price { display:inline-flex; align-items:center; gap:4px; padding:5px 12px; background:var(--accent-glow); border:1px solid rgba(124,92,252,.25); border-radius:8px; font-size:17px; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .price small { font-size:12px; font-weight:400; color:var(--text-muted); }
+  .price .note { font-size:11px; font-weight:400; color:var(--text-dim); }
+
+  .tags { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:12px; }
+  .tag { padding:2px 8px; border-radius:5px; font-size:11px; font-weight:500; }
+  .tag.g { background:#065f46; color:var(--green); }
+  .tag.b { background:#1e3a5f; color:var(--blue); }
+  .tag.a { background:var(--accent-glow); color:#a78bfa; }
+
+  .spec-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:8px; padding:14px; background:var(--surface-raised); border-radius:10px; margin:14px 0; }
+  .spec-grid .s { display:flex; flex-direction:column; gap:1px; }
+  .spec-grid .s .l { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; }
+  .spec-grid .s .v { font-size:13px; font-weight:500; }
+
+  .pc { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+  @media(max-width:600px){ .pc { grid-template-columns:1fr; } }
+  .pc .pro, .pc .con { padding:12px 14px; border-radius:10px; font-size:13px; }
+  .pc .pro { background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.15); }
+  .pc .con { background:rgba(251,191,36,.08); border:1px solid rgba(251,191,36,.15); }
+  .pc .pro .t { color:var(--green); font-weight:600; margin-bottom:4px; }
+  .pc .con .t { color:var(--amber); font-weight:600; margin-bottom:4px; }
+  .pc ul { list-style:none; padding:0; }
+  .pc li { padding:1px 0 1px 14px; position:relative; color:var(--text-muted); }
+  .pc .pro li::before { content:'+'; position:absolute; left:0; color:var(--green); font-weight:700; }
+  .pc .con li::before { content:'−'; position:absolute; left:0; color:var(--amber); font-weight:700; }
+
+  .links { margin-top:14px; padding-top:14px; border-top:1px solid var(--border); }
+  .links .t { font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:6px; }
+  .links-wrap { display:flex; gap:6px; flex-wrap:wrap; }
+  .links-wrap a { display:inline-flex; align-items:center; gap:4px; padding:6px 12px; border-radius:6px; background:var(--surface-raised); border:1px solid var(--border); color:var(--text); text-decoration:none; font-size:12px; font-weight:500; transition:all .15s; }
+  .links-wrap a:hover { background:var(--accent-glow); border-color:var(--accent-dim); color:var(--accent); }
+  .links-wrap a .p { color:var(--text-dim); font-weight:400; }
+
+  .design-badge {
+    display:inline-flex; align-items:center; gap:4px;
+    padding:3px 10px; border-radius:100px;
+    font-size:12px; font-weight:500;
+  }
+  .design-badge.good { background:var(--accent-glow); color:var(--accent); }
+  .design-badge.ok { background:rgba(251,191,36,.1); color:var(--amber); }
+  .design-badge.bad { background:rgba(239,68,68,.1); color:#f87171; }
+
+  .table-wrap { overflow-x:auto; margin:20px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { text-align:left; padding:12px 14px; background:var(--surface-raised); border-bottom:2px solid var(--accent-dim); font-weight:600; white-space:nowrap; }
+  tbody td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text-muted); }
+  tbody tr:hover td { background:var(--accent-glow); }
+  tbody td:first-child { font-weight:500; color:var(--text); white-space:nowrap; }
+  .chk { color:var(--green); font-weight:700; }
+
+  .rec { background:linear-gradient(135deg,var(--accent-glow),transparent); border:1px solid rgba(124,92,252,.3); border-radius:var(--radius); padding:28px; margin:32px 0; }
+  .rec h2 { font-size:20px; font-weight:700; }
+  .rec p { font-size:14px; color:var(--text); line-height:1.7; margin-top:8px; }
+  .rec strong { color:var(--accent); }
+  .rec .q { display:inline-block; padding:4px 10px; border-radius:6px; background:var(--accent-glow); border:1px solid rgba(124,92,252,.2); font-size:12px; margin:2px; }
+
+  .footer { text-align:center; padding:40px 0; color:var(--text-dim); font-size:12px; border-top:1px solid var(--border); margin-top:48px; }
+  .glow-line { height:1px; background:linear-gradient(90deg,transparent,var(--accent-dim),var(--accent),var(--accent-dim),transparent); margin:0; opacity:.5; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="container">
+    <h1>Умная колонка<br>с <span>хорошим дизайном</span></h1>
+    <p>Без devkit-внешности. Perplexity API, управление домом, Xiaozhi, никакой пайки.</p>
+  </div>
+</div>
+<div class="glow-line"></div>
+<div class="container">
+
+<!-- Option 1 -->
+<div class="section-title"><span class="num">1</span> XiaoZhi AI Robot Ball</div>
+<div class="section-desc">Готовая колонка-шар с круглым дисплеем. Xiaozhi из коробки. Выглядит как настоящий гаджет, не как плата.</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2>XiaoZhi AI Voice Chat Robot Ball <span class="design-badge good">★ Дизайн: стильный</span></h2>
+    <div class="price">$23.79 <small>≈ €22</small></div>
+  </div>
+  <div class="tags">
+    <span class="tag g">ESP32-S3 N16R8</span>
+    <span class="tag b">1.28" круглый LCD</span>
+    <span class="tag g">Xiaozhi из коробки</span>
+    <span class="tag a">DeepSeek / Perplexity</span>
+    <span class="tag a">Готовый корпус</span>
+  </div>
+  <div class="spec-grid">
+    <div class="s"><span class="l">Процессор</span><span class="v">ESP32-S3, 8+16MB</span></div>
+    <div class="s"><span class="l">Экран</span><span class="v">1.28" круглый IPS</span></div>
+    <div class="s"><span class="l">Питание</span><span class="v">USB-C, батарея опц.</span></div>
+    <div class="s"><span class="l">Пайка</span><span class="v">Не нужна</span></div>
+    <div class="s"><span class="l">Корпус</span><span class="v">Пластиковый шар</span></div>
+    <div class="s"><span class="l">Прошивка</span><span class="v">Xiaozhi предустановлена</span></div>
+  </div>
+
+  <div class="pc">
+    <div class="pro">
+      <div class="t">+ Плюсы</div>
+      <ul>
+        <li>Готовый девайс в корпусе — достал из коробки и включил</li>
+        <li>Круглый LCD с анимированным лицом/эмоциями</li>
+        <li>Xiaozhi из коробки → Perplexity API через сервер</li>
+        <li>Цена $24 — дешевле любой альтернативы</li>
+        <li>Поддержка ESPHome (опционально → HA)</li>
+      </ul>
+    </div>
+    <div class="con">
+      <div class="t">− Минусы</div>
+      <ul>
+        <li>Маленький динамик (не для музыки)</li>
+        <li>Один микрофон</li>
+        <li>Больше игрушка, чем серьёзная колонка</li>
+      </ul>
+    </div>
+  </div>
+  <div class="links">
+    <div class="t">🎯 Купить</div>
+    <div class="links-wrap">
+      <a href="https://www.aliexpress.com/item/1005008618070807.html" target="_blank">AliExpress <span class="p">$23.79</span></a>
+      <a href="https://www.aliexpress.com/item/1005008821384965.html" target="_blank">AliExpress (2000+ продано) <span class="p">$24.68</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Option 2 -->
+<div class="section-title"><span class="num">2</span> UNIHIKER K10</div>
+<div class="section-desc">Законченное устройство с большим 2.8" сенсорным экраном, камерой, микрофоном и динамиком. Xiaozhi устанавливается за 10 минут.</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2>UNIHIKER K10 <span class="design-badge good">★ Дизайн: отличный</span></h2>
+    <div class="price">$51.89 <small>≈ €49</small></div>
+  </div>
+  <div class="tags">
+    <span class="tag g">ESP32-S3</span>
+    <span class="tag b">2.8" сенсорный IPS</span>
+    <span class="tag g">Камера + микрофон</span>
+    <span class="tag a">Xiaozhi совместим</span>
+    <span class="tag b">Amazon доставка</span>
+  </div>
+  <div class="spec-grid">
+    <div class="s"><span class="l">Процессор</span><span class="v">ESP32-S3</span></div>
+    <div class="s"><span class="l">Экран</span><span class="v">2.8" 240×320 IPS touch</span></div>
+    <div class="s"><span class="l">Камера</span><span class="v">Встроенная</span></div>
+    <div class="s"><span class="l">Аудио</span><span class="v">Микрофон + динамик</span></div>
+    <div class="s"><span class="l">Прошивка</span><span class="v">Python (Mind+)</span></div>
+    <div class="s"><span class="l">Пайка</span><span class="v">Не нужна</span></div>
+  </div>
+
+  <div class="pc">
+    <div class="pro">
+      <div class="t">+ Плюсы</div>
+      <ul>
+        <li>Большой 2.8" цветной сенсорный экран — интерфейс, эмоции, погода</li>
+        <li>Камера для vision-функций (у Xiaozhi есть поддержка зрения)</li>
+        <li>Законченный корпус, выглядит как современный гаджет</li>
+        <li>Можно купить на Amazon — доставка на Кипр за 2-3 дня</li>
+        <li>Python окружение — легко кастомизировать</li>
+      </ul>
+    </div>
+    <div class="con">
+      <div class="t">− Минусы</div>
+      <ul>
+        <li>Xiaozhi нужно устанавливать (есть туториалы на YouTube)</li>
+        <li>Не предназначен изначально как смарт-колонка</li>
+        <li>Динамик и микрофон среднего качества (образовательный девайс)</li>
+        <li>Нужен корпус? В комплекте корпус есть</li>
+      </ul>
+    </div>
+  </div>
+  <div class="links">
+    <div class="t">🎯 Купить</div>
+    <div class="links-wrap">
+      <a href="https://www.amazon.com/UNIHIKER-Coding-Board-STEM-Beginners/dp/B0FK5C68NX" target="_blank">Amazon US <span class="p">$52.99</span></a>
+      <a href="https://www.dfrobot.com/product-2890.html" target="_blank">DFRobot <span class="p">$51.89</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Option 3 -->
+<div class="section-title"><span class="num">3</span> FutureProofHomes Satellite1</div>
+<div class="section-desc">🔊 Единственный вариант с премиальным дизайном колонки (как Sonos). 25W звук, XMOS, 4 микрофона. Но заточен под Home Assistant.</div>
+
+<div class="card" style="border-color:rgba(96,165,250,.3)">
+  <div class="card-header">
+    <h2>Satellite1.1 Smart Speaker <span class="design-badge good">★ Дизайн: премиум</span></h2>
+    <div class="price">$69.99 <small>dev kit</small> + $69.99 <small>корпус</small><br><span style="font-size:14px;font-weight:700;color:var(--accent)">или $134.99 готовый</span></div>
+  </div>
+  <div class="tags">
+    <span class="tag g">XMOS XU316 + ESP32-S3</span>
+    <span class="tag b">4 микрофона</span>
+    <span class="tag g">25W усилитель</span>
+    <span class="tag b">2-полосный динамик</span>
+    <span class="tag a">Дизайн как Sonos</span>
+  </div>
+  <div class="spec-grid">
+    <div class="s"><span class="l">Аудиочип</span><span class="v">XMOS XU316 (800MHz, 16 ядер)</span></div>
+    <div class="s"><span class="l">Усилитель</span><span class="v">25W Mono, TAS2780</span></div>
+    <div class="s"><span class="l">Микрофоны</span><span class="v">4 шт</span></div>
+    <div class="s"><span class="l">Экосистема</span><span class="v">Home Assistant / ESPHome</span></div>
+    <div class="s"><span class="l">Цвета</span><span class="v">Charcoal Gray / Bone White</span></div>
+    <div class="s"><span class="l">Пайка</span><span class="v">Не нужна (собрать — 15 мин)</span></div>
+  </div>
+
+  <div class="pc">
+    <div class="pro">
+      <div class="t">+ Плюсы</div>
+      <ul>
+        <li>Премиальный дизайн — выглядит как Sonos / HomePod</li>
+        <li>25W 2-полосный звук — реально хороший звук</li>
+        <li>4 микрофона + XMOS — лучшее распознавание речи</li>
+        <li>mmWave датчик присутствия (опционально)</li>
+        <li>Готовый предсобранный вариант ($135)</li>
+      </ul>
+    </div>
+    <div class="con">
+      <div class="t">− Минусы</div>
+      <ul>
+        <li>Экосистема Home Assistant — Xiaozhi может не работать</li>
+        <li>Цена: $135-200 в зависимости от конфигурации</li>
+        <li>Предзаказ до mid-July 2026</li>
+        <li>XMOS чип заточен под ESPHome/HA, не под Xiaozhi</li>
+      </ul>
+    </div>
+  </div>
+  <div class="links">
+    <div class="t">🎯 Купить</div>
+    <div class="links-wrap">
+      <a href="https://futureproofhomes.net/products/satellite1-smart-speaker" target="_blank">Satellite1 Pre-Assembled <span class="p">$134.99</span></a>
+      <a href="https://futureproofhomes.net/products/satellite1-smart-speaker-enclosure-kit" target="_blank">DIY Enclosure Kit <span class="p">$69.99</span></a>
+      <a href="https://futureproofhomes.net/products/satellite1-pcb-dev-kit" target="_blank">PCB Dev Kit <span class="p">$69.99</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Architecture -->
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:32px 0">
+  <h3 style="font-size:17px;font-weight:600;margin-bottom:12px">⚙️ Cloud-first архитектура (для вариантов 1 и 2)</h3>
+  <p style="color:var(--text-muted);font-size:13px;margin-bottom:14px">Privacy неважна → всё через облачные API. Xiaozhi Server отправляет голос в Groq (STT), затем в Perplexity (LLM), затем в ElevenLabs (TTS).</p>
+  <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;padding:14px;background:var(--surface-raised);border-radius:8px;font-size:12px">
+    <span style="padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border);font-weight:500">🎤 Устройство</span>
+    <span style="color:var(--text-dim)">→</span>
+    <span style="padding:8px 12px;border-radius:6px;background:var(--accent-glow);border:1px solid var(--accent-dim);font-weight:500;color:var(--accent)">Xiaozhi Server</span>
+    <span style="color:var(--text-dim)">→</span>
+    <span style="padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border)">Groq STT</span>
+    <span style="color:var(--text-dim)">→</span>
+    <span style="padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border)">Perplexity LLM</span>
+    <span style="color:var(--text-dim)">→</span>
+    <span style="padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border)">ElevenLabs TTS</span>
+    <span style="color:var(--text-dim)">→</span>
+    <span style="padding:8px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--border);font-weight:500">🔉 Динамик</span>
+  </div>
+</div>
+
+<!-- Comparison -->
+<div class="section-title">📊 Сравнение</div>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Параметр</th><th>XiaoZhi Robot Ball</th><th>UNIHIKER K10</th><th>Satellite1</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Цена полная</td><td><strong>$24</strong></td><td><strong>$52</strong></td><td><strong>$135-200</strong></td></tr>
+      <tr><td>Дизайн</td><td>⭐ милый шар с экраном</td><td>⭐⭐⭐ стильный гаджет</td><td>⭐⭐⭐⭐⭐ Sonos-уровень</td></tr>
+      <tr><td>Звук</td><td>Базовый</td><td>Средний</td><td><span class="chk">✓</span> 25W 2-полосный</td></tr>
+      <tr><td>Микрофоны</td><td>1</td><td>1</td><td>4 + XMOS DSP</td></tr>
+      <tr><td>Xiaozhi</td><td><span class="chk">✓</span> Из коробки</td><td><span class="chk">✓</span> Устанавливается</td><td><span class="chk">—</span> HA только</td></tr>
+      <tr><td>Perplexity API</td><td><span class="chk">✓</span></td><td><span class="chk">✓</span></td><td>Через HA</td></tr>
+      <tr><td>Умный дом</td><td>MCP/MQTT</td><td>Python/GPIO</td><td>HA (из коробки)</td></tr>
+      <tr><td>Amazon доставка</td><td>нет (AliExpress)</td><td><span class="chk">✓</span></td><td>нет (FPH)</td></tr>
+      <tr><td>Пайка</td><td>Не нужна</td><td>Не нужна</td><td>Не нужна (собрать)</td></tr>
+      <tr><td>Наличие</td><td>В наличии</td><td>В наличии</td><td>Предзаказ (July)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Recommendation -->
+<div class="rec">
+  <h2>🎯 Что выбрать — 3 сценария</h2>
+  
+  <p><strong>Сценарий 1: «Хочу красивую вещь на стол, которая отвечает на вопросы»</strong><br>
+  → <strong>XiaoZhi AI Robot Ball ($24, AliExpress)</strong><br>
+  Xiaozhi из коробки. Поднимаешь сервер (или юзаешь xiaozhi.me), подключаешь Perplexity. Круглый дисплей с лицом. Доставка 2-3 недели. Идеально как первый шаг.</p>
+
+  <p style="margin-top:14px"><strong>Сценарий 2: «Хочу большой экран и камеру в красивом корпусе»</strong><br>
+  → <strong>UNIHIKER K10 ($52, Amazon)</strong><br>
+  Ставишь Xiaozhi (есть YouTube туториал). Получаешь 2.8" сенсорный экран + камеру + микрофон + динамик в аккуратном корпусе. Доставка за 2 дня.</p>
+
+  <p style="margin-top:14px"><strong>Сценарий 3: «Хочу настоящую премиум колонку как Sonos с голосовым ассистентом»</strong><br>
+  → <strong>Satellite1 ($135-200, предзаказ)</strong><br>
+  Лучший звук, лучший дизайн, 4 микрофона. Но — только HA экосистема. Если HA не нужен — не твой вариант. Если HA есть — лучшее что можно купить.</p>
+</div>
+
+<!-- Spec comparison -->
+<div style="margin:24px 0;padding:20px;background:var(--surface);border-radius:12px;border:1px solid var(--border)">
+  <h3 style="font-size:15px;font-weight:600;margin-bottom:8px">💡 Совет по Xiaozhi + Perplexity</h3>
+  <p style="font-size:13px;color:var(--text-muted);line-height:1.6">
+  1. Покупаешь XiaoZhi Robot Ball за $24 на AliExpress<br>
+  2. Подключаешь к Wi-Fi через приложение<br>
+  3. Поднимаешь Xiaozhi Server на любом VPS ($5/мес) или RPi дома<br>
+  4. В конфиге сервера указываешь Perplexity API (OpenAI-compatible)<br>
+  5. Всё. Колонка отвечает через Groq → Perplexity → ElevenLabs<br>
+  6. Если нужен умный дом — MCP/MQTT для управления устройствами<br>
+  Все ссылки: github.com/78/xiaozhi-esp32 и github.com/xinnan-tech/xiaozhi-esp32-server
+  </p>
+</div>
+
+</div>
+<div class="glow-line"></div>
+<div class="footer">30 мая 2026 • Andrei Vashchenko • Fintech PM, Cyprus</div>
+</body>
+</html>
