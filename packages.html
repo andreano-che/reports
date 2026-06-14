@@ -108,6 +108,15 @@ tr:hover { background: #161b22; }
 .date-cell { width: 90px; font-size: 13px; white-space: nowrap; }
 .days-cell { width: 130px; font-size: 13px; white-space: nowrap; }
 
+a.email-link, a.track-link {
+    color: #58a6ff;
+    text-decoration: none;
+}
+a.email-link:hover, a.track-link:hover {
+    text-decoration: underline;
+    color: #79b8ff;
+}
+
 .badge {
     display: inline-block;
     padding: 2px 8px;
@@ -146,14 +155,14 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
 </head>
 <body>
 <div class="container">
-<h1>📦 Package Tracker <small>31 посылок</small></h1>
+<h1>📦 Package Tracker <small>29 посылок</small></h1>
 
 <div class="stats">
     <div class="stat-card overdue"><span class="number">1</span><span class="label">Просрочено</span></div>
-    <div class="stat-card in-transit"><span class="number">7</span><span class="label">В пути</span></div>
-    <div class="stat-card delivered"><span class="number">8</span><span class="label">Доставлено</span></div>
-    <div class="stat-card orders"><span class="number">15</span><span class="label">Заказы</span></div>
-    <div class="stat-card total"><span class="number">31</span><span class="label">Всего</span></div>
+    <div class="stat-card in-transit"><span class="number">6</span><span class="label">В пути</span></div>
+    <div class="stat-card delivered"><span class="number">9</span><span class="label">Доставлено</span></div>
+    <div class="stat-card orders"><span class="number">13</span><span class="label">Заказы</span></div>
+    <div class="stat-card total"><span class="number">29</span><span class="label">Всего</span></div>
 </div>
 
 <input type="text" class="search-box" id="search" placeholder="🔍 Поиск по отправителю, номеру заказа, отслеживания..." oninput="filterTable()">
@@ -178,9 +187,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-overdue">
             <td class="status-cell"><span class="badge" style="background:#e74c3c">Просрочено</span></td>
             <td class="icon-cell">🔴</td>
-            <td class="carrier-cell">RRR.LT</td>
-            <td class="subject-cell" title="Your order no 8240689 is shipped">Your order no 8240689 is shipped</td>
-            <td class="order-cell">8240689</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e44a916a080e2f" target="_blank" class="email-link">RRR.LT ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e44a916a080e2f" target="_blank" class="email-link">Your order no 8240689 is shipped</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e44a916a080e2f" target="_blank" class="email-link">8240689</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-06-10</td>
             <td class="date-cell">—</td>
@@ -190,8 +199,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-in_transit">
             <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
             <td class="icon-cell">📦</td>
-            <td class="carrier-cell">eBay</td>
-            <td class="subject-cell" title="🚚 Order update: 2019-2024 BMW 330i G20 IN...">🚚 Order update: 2019-2024 BMW 330i G20 IN...</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb707d57a9085c" target="_blank" class="email-link">eBay ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb707d57a9085c" target="_blank" class="email-link">🚚 Order update: 2019-2024 BMW 330i G20 IN...</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-07-02</td>
@@ -202,8 +211,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-in_transit">
             <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
             <td class="icon-cell">📦</td>
-            <td class="carrier-cell">DHL Paket</td>
-            <td class="subject-cell" title="Your Parcelstock GmbH shipment is on its way">Your Parcelstock GmbH shipment is on its way</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb2ac590971f6d" target="_blank" class="email-link">DHL Paket ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb2ac590971f6d" target="_blank" class="email-link">Your Parcelstock GmbH shipment is on its way</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-07-01</td>
@@ -214,9 +223,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-in_transit">
             <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
             <td class="icon-cell">📦</td>
-            <td class="carrier-cell">GermanCarParts</td>
-            <td class="subject-cell" title="Shipment confirmed – order 328720">Shipment confirmed – order 328720</td>
-            <td class="order-cell">328720</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb04f52bfcfae0" target="_blank" class="email-link">GermanCarParts ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb04f52bfcfae0" target="_blank" class="email-link">Shipment confirmed – order 328720</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb04f52bfcfae0" target="_blank" class="email-link">328720</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-07-01</td>
             <td class="date-cell">—</td>
@@ -226,8 +235,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-in_transit">
             <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
             <td class="icon-cell">📦</td>
-            <td class="carrier-cell">EshopWedrop</td>
-            <td class="subject-cell" title="Parcel P002037160 departed from DE">Parcel P002037160 departed from DE</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e97d00df8b40e5" target="_blank" class="email-link">EshopWedrop ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e97d00df8b40e5" target="_blank" class="email-link">Parcel P002037160 departed from DE</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-06-26</td>
@@ -238,8 +247,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-in_transit">
             <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
             <td class="icon-cell">📦</td>
-            <td class="carrier-cell">EshopWedrop</td>
-            <td class="subject-cell" title="Parcel P002034704 departed from DE">Parcel P002034704 departed from DE</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e6eea77b76dfdb" target="_blank" class="email-link">EshopWedrop ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e6eea77b76dfdb" target="_blank" class="email-link">Parcel P002034704 departed from DE</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-06-18</td>
@@ -250,32 +259,20 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-in_transit">
             <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
             <td class="icon-cell">📦</td>
-            <td class="carrier-cell">RRR.LT</td>
-            <td class="subject-cell" title="Your order no 8310902 is shipped">Your order no 8310902 is shipped</td>
-            <td class="order-cell">8310902</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e6a2b549376b50" target="_blank" class="email-link">RRR.LT ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e6a2b549376b50" target="_blank" class="email-link">Your order no 8310902 is shipped</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e6a2b549376b50" target="_blank" class="email-link">8310902</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">2026-06-17</td>
             <td class="date-cell">—</td>
             <td class="days-cell normal-days">Осталось 3 дн.</td>
         </tr>
 
-        <tr class="status-in_transit">
-            <td class="status-cell"><span class="badge" style="background:#3498db">В пути</span></td>
-            <td class="icon-cell">📦</td>
-            <td class="carrier-cell">Amazon.de</td>
-            <td class="subject-cell" title="Dispatched: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item">Dispatched: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item</td>
-            <td class="order-cell">305-6027434-1301168</td>
-            <td class="tracking-cell">—</td>
-            <td class="date-cell">—</td>
-            <td class="date-cell">—</td>
-            <td class="days-cell "></td>
-        </tr>
-
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Temu</td>
-            <td class="subject-cell" title="Your Temu order confirmation (#PO-052-09819144617591792)">Your Temu order confirmation (#PO-052-09819144617591792)</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec519bea7960f0" target="_blank" class="email-link">Temu ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec519bea7960f0" target="_blank" class="email-link">Your Temu order confirmation (#PO-052-09819144617591792)</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
@@ -286,9 +283,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">UGREEN EU</td>
-            <td class="subject-cell" title="Order UGREEN-EU#97184 confirmed">Order UGREEN-EU#97184 confirmed</td>
-            <td class="order-cell">97184</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec4fcd24cc2585" target="_blank" class="email-link">UGREEN EU ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec4fcd24cc2585" target="_blank" class="email-link">Order UGREEN-EU#97184 confirmed</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec4fcd24cc2585" target="_blank" class="email-link">97184</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -298,8 +295,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Temu</td>
-            <td class="subject-cell" title="Order shipped and BOXNOW tracking number is ready (Order ID: #PO-052-04321589435511792)">Order shipped and BOXNOW tracking number is ready (Order ID: #PO-052-04321589435…</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec158efde3c9c7" target="_blank" class="email-link">Temu ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ec158efde3c9c7" target="_blank" class="email-link">Order shipped and BOXNOW tracking number is ready (Order ID: #PO-052-04321589435…</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
@@ -310,8 +307,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Temu</td>
-            <td class="subject-cell" title="Your Temu order confirmation (#PO-052-04321589435511792)">Your Temu order confirmation (#PO-052-04321589435511792)</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eba51755384083" target="_blank" class="email-link">Temu ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eba51755384083" target="_blank" class="email-link">Your Temu order confirmation (#PO-052-04321589435511792)</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
@@ -322,9 +319,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">RRR.LT</td>
-            <td class="subject-cell" title="Your order 8468803 is received">Your order 8468803 is received</td>
-            <td class="order-cell">8468803</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb0eac856ea764" target="_blank" class="email-link">RRR.LT ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb0eac856ea764" target="_blank" class="email-link">Your order 8468803 is received</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb0eac856ea764" target="_blank" class="email-link">8468803</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -334,8 +331,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">eBay</td>
-            <td class="subject-cell" title="Andrei, your order is confirmed">Andrei, your order is confirmed</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb220603f0f5fd" target="_blank" class="email-link">eBay ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb220603f0f5fd" target="_blank" class="email-link">Andrei, your order is confirmed</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
@@ -346,9 +343,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">EshopWedrop</td>
-            <td class="subject-cell" title="Order 575539 Summary!">Order 575539 Summary!</td>
-            <td class="order-cell">575539</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb090dd8e32269" target="_blank" class="email-link">EshopWedrop ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb090dd8e32269" target="_blank" class="email-link">Order 575539 Summary!</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb090dd8e32269" target="_blank" class="email-link">575539</a></td>
             <td class="tracking-cell">P002034704</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -358,9 +355,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">GermanCarParts</td>
-            <td class="subject-cell" title="Invoice 459563-65 for your order 328720">Invoice 459563-65 for your order 328720</td>
-            <td class="order-cell">328720</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ea36ae945528c8" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ea36ae945528c8" target="_blank" class="email-link">👍 Great news! We just received your order #260607-3295566</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19ea36ae945528c8" target="_blank" class="email-link">260607-3295566</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -370,9 +367,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">GermanCarParts</td>
-            <td class="subject-cell" title="Bestellbestätigung 328720">Bestellbestätigung 328720</td>
-            <td class="order-cell">—</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e7e0d47ae2dd33" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e7e0d47ae2dd33" target="_blank" class="email-link">👍 Great news! We just received your order #260531-9442085</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e7e0d47ae2dd33" target="_blank" class="email-link">260531-9442085</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -382,9 +379,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="👍 Great news! We just received your order #260607-3295566">👍 Great news! We just received your order #260607-3295566</td>
-            <td class="order-cell">260607-3295566</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e7de27215abb5a" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e7de27215abb5a" target="_blank" class="email-link">👍 Great news! We just received your order #260531-0154717</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e7de27215abb5a" target="_blank" class="email-link">260531-0154717</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -394,9 +391,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="👍 Great news! We just received your order #260531-9442085">👍 Great news! We just received your order #260531-9442085</td>
-            <td class="order-cell">260531-9442085</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e63c2c5774f22a" target="_blank" class="email-link">RRR.LT ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e63c2c5774f22a" target="_blank" class="email-link">Your order 8310902 is received</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e63c2c5774f22a" target="_blank" class="email-link">8310902</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -406,9 +403,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="👍 Great news! We just received your order #260531-0154717">👍 Great news! We just received your order #260531-0154717</td>
-            <td class="order-cell">260531-0154717</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e48f3c5ca33296" target="_blank" class="email-link">Amazon.de ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e48f3c5ca33296" target="_blank" class="email-link">Ordered: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e48f3c5ca33296" target="_blank" class="email-link">305-6027434-1301168</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -418,33 +415,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-order">
             <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
             <td class="icon-cell">📋</td>
-            <td class="carrier-cell">RRR.LT</td>
-            <td class="subject-cell" title="Your order 8310902 is received">Your order 8310902 is received</td>
-            <td class="order-cell">8310902</td>
-            <td class="tracking-cell">—</td>
-            <td class="date-cell">—</td>
-            <td class="date-cell">—</td>
-            <td class="days-cell "></td>
-        </tr>
-
-        <tr class="status-order">
-            <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
-            <td class="icon-cell">📋</td>
-            <td class="carrier-cell">Amazon.de</td>
-            <td class="subject-cell" title="Ordered: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item">Ordered: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item</td>
-            <td class="order-cell">305-6027434-1301168</td>
-            <td class="tracking-cell">—</td>
-            <td class="date-cell">—</td>
-            <td class="date-cell">—</td>
-            <td class="days-cell "></td>
-        </tr>
-
-        <tr class="status-order">
-            <td class="status-cell"><span class="badge" style="background:#f39c12">Заказ</span></td>
-            <td class="icon-cell">📋</td>
-            <td class="carrier-cell">RRR.LT</td>
-            <td class="subject-cell" title="Your order 8240689 is received">Your order 8240689 is received</td>
-            <td class="order-cell">8240689</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e3f6e8012878ed" target="_blank" class="email-link">RRR.LT ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e3f6e8012878ed" target="_blank" class="email-link">Your order 8240689 is received</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e3f6e8012878ed" target="_blank" class="email-link">8240689</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -454,9 +427,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="✅ Your package is waiting for you at the Skroutz Point! #260607-3295566">✅ Your package is waiting for you at the Skroutz Point! #260607-3295566</td>
-            <td class="order-cell">260607-3295566</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb5b3d767ddf2d" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb5b3d767ddf2d" target="_blank" class="email-link">✅ Your package is waiting for you at the Skroutz Point! #260607-3295566</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19eb5b3d767ddf2d" target="_blank" class="email-link">260607-3295566</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -466,9 +439,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-0154717">🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-0154717</td>
-            <td class="order-cell">260531-0154717</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e9894ece2e2bf1" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e9894ece2e2bf1" target="_blank" class="email-link">🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-0154717</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e9894ece2e2bf1" target="_blank" class="email-link">260531-0154717</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -478,9 +451,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-9442085">🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-9442085</td>
-            <td class="order-cell">260531-9442085</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e9825478188c63" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e9825478188c63" target="_blank" class="email-link">🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-9442085</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e9825478188c63" target="_blank" class="email-link">260531-9442085</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -490,9 +463,9 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">Skroutz</td>
-            <td class="subject-cell" title="✅ Το δέμα σου σε περιμένει στο Skroutz Point! #260531-0154717">✅ Το δέμα σου σε περιμένει στο Skroutz Point! #260531-0154717</td>
-            <td class="order-cell">260531-0154717</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e97060ca8df7b4" target="_blank" class="email-link">Skroutz ✉️</a></td>
+            <td class="subject-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e97060ca8df7b4" target="_blank" class="email-link">✅ Το δέμα σου σε περιμένει στο Skroutz Point! #260531-0154717</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e97060ca8df7b4" target="_blank" class="email-link">260531-0154717</a></td>
             <td class="tracking-cell">—</td>
             <td class="date-cell">—</td>
             <td class="date-cell">—</td>
@@ -502,8 +475,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">DHL Express</td>
-            <td class="subject-cell" title="DHL On Demand Delivery">DHL On Demand Delivery</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e6454aa811722b" target="_blank" class="email-link">DHL Express ✉️</a></td>
+            <td class="subject-cell"><a href="https://www.dhl.com/global-en/home/tracking/tracking-express.html?tracking-id=3490624782" target="_blank" class="track-link">DHL On Demand Delivery 🔗</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">3490624782</td>
             <td class="date-cell">—</td>
@@ -514,8 +487,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">DHL Express</td>
-            <td class="subject-cell" title="DHL On Demand Delivery">DHL On Demand Delivery</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e5065c4dd55df8" target="_blank" class="email-link">DHL Express ✉️</a></td>
+            <td class="subject-cell"><a href="https://www.dhl.com/global-en/home/tracking/tracking-express.html?tracking-id=3490624782" target="_blank" class="track-link">DHL On Demand Delivery 🔗</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">3490624782</td>
             <td class="date-cell">2026-06-12</td>
@@ -526,8 +499,20 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">DHL Express</td>
-            <td class="subject-cell" title="DHL On Demand Delivery">DHL On Demand Delivery</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e503db8da3cb1f" target="_blank" class="email-link">Amazon.de ✉️</a></td>
+            <td class="subject-cell"><a href="https://www.amazon.de/progress-tracker/package?_encoding=UTF8&orderId=305-6027434-1301168&packageIndex=0&shipmentId=T6RmwXzNb&vt=NOTIFICATIONS&ref_=p_btn_fed_track_package" target="_blank" class="track-link">Dispatched: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item 🔗</a></td>
+            <td class="order-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19e503db8da3cb1f" target="_blank" class="email-link">305-6027434-1301168</a></td>
+            <td class="tracking-cell">—</td>
+            <td class="date-cell">—</td>
+            <td class="date-cell">2026-06-14</td>
+            <td class="days-cell "></td>
+        </tr>
+
+        <tr class="status-delivered">
+            <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
+            <td class="icon-cell">✅</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19d8c80dc5174d91" target="_blank" class="email-link">DHL Express ✉️</a></td>
+            <td class="subject-cell"><a href="https://www.dhl.com/global-en/home/tracking/tracking-express.html?tracking-id=6993778971" target="_blank" class="track-link">DHL On Demand Delivery 🔗</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">6993778971</td>
             <td class="date-cell">—</td>
@@ -538,8 +523,8 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
         <tr class="status-delivered">
             <td class="status-cell"><span class="badge" style="background:#27ae60">Доставлено</span></td>
             <td class="icon-cell">✅</td>
-            <td class="carrier-cell">DHL Express</td>
-            <td class="subject-cell" title="DHL On Demand Delivery">DHL On Demand Delivery</td>
+            <td class="carrier-cell"><a href="https://mail.google.com/mail/u/0/#inbox/19d8c7e9354938dd" target="_blank" class="email-link">DHL Express ✉️</a></td>
+            <td class="subject-cell"><a href="https://www.dhl.com/global-en/home/tracking/tracking-express.html?tracking-id=3490379012" target="_blank" class="track-link">DHL On Demand Delivery 🔗</a></td>
             <td class="order-cell">—</td>
             <td class="tracking-cell">3490379012</td>
             <td class="date-cell">—</td>
@@ -549,11 +534,11 @@ tr.status-order td.carrier-cell { opacity: 0.7; }
 </tbody>
 </table>
 </div>
-<div class="last-updated">Обновлено: 14.06.2026 18:27</div>
+<div class="last-updated">Обновлено: 14.06.2026 19:23</div>
 </div>
 
 <script>
-const packagesData = [{"subject": "Your order no 8240689 is shipped", "carrier": "RRR.LT", "order": "8240689", "tracking": "", "status": "overdue"}, {"subject": "🚚 Order update: 2019-2024 BMW 330i G20 IN...", "carrier": "eBay", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Your Parcelstock GmbH shipment is on its way", "carrier": "DHL Paket", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Shipment confirmed – order 328720", "carrier": "GermanCarParts", "order": "328720", "tracking": "", "status": "in_transit"}, {"subject": "Parcel P002037160 departed from DE", "carrier": "EshopWedrop", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Parcel P002034704 departed from DE", "carrier": "EshopWedrop", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Your order no 8310902 is shipped", "carrier": "RRR.LT", "order": "8310902", "tracking": "", "status": "in_transit"}, {"subject": "Dispatched: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item", "carrier": "Amazon.de", "order": "305-6027434-1301168", "tracking": "", "status": "in_transit"}, {"subject": "Your Temu order confirmation (#PO-052-09819144617591792)", "carrier": "Temu", "order": "", "tracking": "", "status": "order"}, {"subject": "Order UGREEN-EU#97184 confirmed", "carrier": "UGREEN EU", "order": "97184", "tracking": "", "status": "order"}, {"subject": "Order shipped and BOXNOW tracking number is ready (Order ID: #PO-052-04321589435511792)", "carrier": "Temu", "order": "", "tracking": "", "status": "order"}, {"subject": "Your Temu order confirmation (#PO-052-04321589435511792)", "carrier": "Temu", "order": "", "tracking": "", "status": "order"}, {"subject": "Your order 8468803 is received", "carrier": "RRR.LT", "order": "8468803", "tracking": "", "status": "order"}, {"subject": "Andrei, your order is confirmed", "carrier": "eBay", "order": "", "tracking": "", "status": "order"}, {"subject": "Order 575539 Summary!", "carrier": "EshopWedrop", "order": "575539", "tracking": "P002034704", "status": "order"}, {"subject": "Invoice 459563-65 for your order 328720", "carrier": "GermanCarParts", "order": "328720", "tracking": "", "status": "order"}, {"subject": "Bestellbestätigung 328720", "carrier": "GermanCarParts", "order": "", "tracking": "", "status": "order"}, {"subject": "👍 Great news! We just received your order #260607-3295566", "carrier": "Skroutz", "order": "260607-3295566", "tracking": "", "status": "order"}, {"subject": "👍 Great news! We just received your order #260531-9442085", "carrier": "Skroutz", "order": "260531-9442085", "tracking": "", "status": "order"}, {"subject": "👍 Great news! We just received your order #260531-0154717", "carrier": "Skroutz", "order": "260531-0154717", "tracking": "", "status": "order"}, {"subject": "Your order 8310902 is received", "carrier": "RRR.LT", "order": "8310902", "tracking": "", "status": "order"}, {"subject": "Ordered: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item", "carrier": "Amazon.de", "order": "305-6027434-1301168", "tracking": "", "status": "order"}, {"subject": "Your order 8240689 is received", "carrier": "RRR.LT", "order": "8240689", "tracking": "", "status": "order"}, {"subject": "✅ Your package is waiting for you at the Skroutz Point! #260607-3295566", "carrier": "Skroutz", "order": "260607-3295566", "tracking": "", "status": "delivered"}, {"subject": "🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-0154717", "carrier": "Skroutz", "order": "260531-0154717", "tracking": "", "status": "delivered"}, {"subject": "🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-9442085", "carrier": "Skroutz", "order": "260531-9442085", "tracking": "", "status": "delivered"}, {"subject": "✅ Το δέμα σου σε περιμένει στο Skroutz Point! #260531-0154717", "carrier": "Skroutz", "order": "260531-0154717", "tracking": "", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "3490624782", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "3490624782", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "6993778971", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "3490379012", "status": "delivered"}];
+const packagesData = [{"subject": "Your order no 8240689 is shipped", "carrier": "RRR.LT", "order": "8240689", "tracking": "", "status": "overdue"}, {"subject": "🚚 Order update: 2019-2024 BMW 330i G20 IN...", "carrier": "eBay", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Your Parcelstock GmbH shipment is on its way", "carrier": "DHL Paket", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Shipment confirmed – order 328720", "carrier": "GermanCarParts", "order": "328720", "tracking": "", "status": "in_transit"}, {"subject": "Parcel P002037160 departed from DE", "carrier": "EshopWedrop", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Parcel P002034704 departed from DE", "carrier": "EshopWedrop", "order": "", "tracking": "", "status": "in_transit"}, {"subject": "Your order no 8310902 is shipped", "carrier": "RRR.LT", "order": "8310902", "tracking": "", "status": "in_transit"}, {"subject": "Your Temu order confirmation (#PO-052-09819144617591792)", "carrier": "Temu", "order": "", "tracking": "", "status": "order"}, {"subject": "Order UGREEN-EU#97184 confirmed", "carrier": "UGREEN EU", "order": "97184", "tracking": "", "status": "order"}, {"subject": "Order shipped and BOXNOW tracking number is ready (Order ID: #PO-052-04321589435511792)", "carrier": "Temu", "order": "", "tracking": "", "status": "order"}, {"subject": "Your Temu order confirmation (#PO-052-04321589435511792)", "carrier": "Temu", "order": "", "tracking": "", "status": "order"}, {"subject": "Your order 8468803 is received", "carrier": "RRR.LT", "order": "8468803", "tracking": "", "status": "order"}, {"subject": "Andrei, your order is confirmed", "carrier": "eBay", "order": "", "tracking": "", "status": "order"}, {"subject": "Order 575539 Summary!", "carrier": "EshopWedrop", "order": "575539", "tracking": "P002034704", "status": "order"}, {"subject": "👍 Great news! We just received your order #260607-3295566", "carrier": "Skroutz", "order": "260607-3295566", "tracking": "", "status": "order"}, {"subject": "👍 Great news! We just received your order #260531-9442085", "carrier": "Skroutz", "order": "260531-9442085", "tracking": "", "status": "order"}, {"subject": "👍 Great news! We just received your order #260531-0154717", "carrier": "Skroutz", "order": "260531-0154717", "tracking": "", "status": "order"}, {"subject": "Your order 8310902 is received", "carrier": "RRR.LT", "order": "8310902", "tracking": "", "status": "order"}, {"subject": "Ordered: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item", "carrier": "Amazon.de", "order": "305-6027434-1301168", "tracking": "", "status": "order"}, {"subject": "Your order 8240689 is received", "carrier": "RRR.LT", "order": "8240689", "tracking": "", "status": "order"}, {"subject": "✅ Your package is waiting for you at the Skroutz Point! #260607-3295566", "carrier": "Skroutz", "order": "260607-3295566", "tracking": "", "status": "delivered"}, {"subject": "🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-0154717", "carrier": "Skroutz", "order": "260531-0154717", "tracking": "", "status": "delivered"}, {"subject": "🥳 Η παραγγελία σου ολοκληρώθηκε! Πώς πήγε; #260531-9442085", "carrier": "Skroutz", "order": "260531-9442085", "tracking": "", "status": "delivered"}, {"subject": "✅ Το δέμα σου σε περιμένει στο Skroutz Point! #260531-0154717", "carrier": "Skroutz", "order": "260531-0154717", "tracking": "", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "3490624782", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "3490624782", "status": "delivered"}, {"subject": "Dispatched: ‘Braun BT9565 BT9565 Beard...’ and ⁦1⁩ more item", "carrier": "Amazon.de", "order": "305-6027434-1301168", "tracking": "", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "6993778971", "status": "delivered"}, {"subject": "DHL On Demand Delivery", "carrier": "DHL Express", "order": "", "tracking": "3490379012", "status": "delivered"}];
 function filterTable() {
     const q = document.getElementById('search').value.toLowerCase().trim();
     const rows = document.querySelectorAll('#packages-table tbody tr');
